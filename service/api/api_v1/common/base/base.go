@@ -2,9 +2,11 @@ package base
 
 import (
 	"fmt"
+	"os"
 	"reflect"
 	"strings"
 	"sun-panel/api/api_v1/common/apiReturn"
+	"sun-panel/global"
 	"sun-panel/lib/captcha"
 	"sun-panel/lib/cmn"
 	"sun-panel/models"
@@ -96,6 +98,13 @@ func GetCurrentVisitMode(c *gin.Context) (visitMode int) {
 		}
 	}
 	return
+}
+
+// 获取上传文件保存目录（统一存放于 {source_path}/icons/，目录不存在时自动创建）
+func GetUploadSaveDir() string {
+	dir := global.Config.GetValueString("base", "source_path") + "/icons/"
+	os.MkdirAll(dir, os.ModePerm)
+	return dir
 }
 
 // 验证器验证

@@ -2,7 +2,6 @@ package panel
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/url"
 	"os"
 	"path"
@@ -12,10 +11,8 @@ import (
 	"sun-panel/api/api_v1/common/apiReturn"
 	"sun-panel/api/api_v1/common/base"
 	"sun-panel/global"
-	"sun-panel/lib/cmn"
 	"sun-panel/lib/siteFavicon"
 	"sun-panel/models"
-	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
@@ -243,12 +240,7 @@ func (a *ItemIcon) GetSiteFavicon(c *gin.Context) {
 	global.Logger.Debug("fullUrl:", fullUrl)
 
 	// 生成保存目录
-	configUpload := global.Config.GetValueString("base", "source_path")
-	savePath := fmt.Sprintf("%s/%d/%d/%d/", configUpload, time.Now().Year(), time.Now().Month(), time.Now().Day())
-	isExist, _ := cmn.PathExists(savePath)
-	if !isExist {
-		os.MkdirAll(savePath, os.ModePerm)
-	}
+	savePath := base.GetUploadSaveDir()
 
 	// 下载
 	var imgInfo *os.File

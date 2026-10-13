@@ -22,7 +22,6 @@ type FileApi struct{}
 
 func (a *FileApi) UploadImg(c *gin.Context) {
 	userInfo, _ := base.GetCurrentUserInfo(c)
-	configUpload := global.Config.GetValueString("base", "source_path")
 	f, err := c.FormFile("imgfile")
 	if err != nil {
 		apiReturn.ErrorByCode(c, 1300)
@@ -44,11 +43,7 @@ func (a *FileApi) UploadImg(c *gin.Context) {
 			return
 		}
 		fileName := cmn.Md5(fmt.Sprintf("%s%s", f.Filename, time.Now().String()))
-		fildDir := fmt.Sprintf("%s/%d/%d/%d/", configUpload, time.Now().Year(), time.Now().Month(), time.Now().Day())
-		isExist, _ := cmn.PathExists(fildDir)
-		if !isExist {
-			os.MkdirAll(fildDir, os.ModePerm)
-		}
+		fildDir := base.GetUploadSaveDir()
 		filepath := fmt.Sprintf("%s%s%s", fildDir, fileName, fileExt)
 		c.SaveUploadedFile(f, filepath)
 
@@ -63,7 +58,6 @@ func (a *FileApi) UploadImg(c *gin.Context) {
 
 func (a *FileApi) UploadFiles(c *gin.Context) {
 	userInfo, _ := base.GetCurrentUserInfo(c)
-	configUpload := global.Config.GetValueString("base", "source_path")
 
 	form, err := c.MultipartForm()
 	if err != nil {
@@ -76,11 +70,7 @@ func (a *FileApi) UploadFiles(c *gin.Context) {
 	for _, f := range files {
 		fileExt := strings.ToLower(path.Ext(f.Filename))
 		fileName := cmn.Md5(fmt.Sprintf("%s%s", f.Filename, time.Now().String()))
-		fildDir := fmt.Sprintf("%s/%d/%d/%d/", configUpload, time.Now().Year(), time.Now().Month(), time.Now().Day())
-		isExist, _ := cmn.PathExists(fildDir)
-		if !isExist {
-			os.MkdirAll(fildDir, os.ModePerm)
-		}
+		fildDir := base.GetUploadSaveDir()
 		filepath := fmt.Sprintf("%s%s%s", fildDir, fileName, fileExt)
 		if c.SaveUploadedFile(f, filepath) != nil {
 			errFiles = append(errFiles, f.Filename)
