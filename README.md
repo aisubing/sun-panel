@@ -34,6 +34,25 @@ A server, NAS navigation panel, Homepage, Browser homepage.
 > 
 > 作者为了维持生计，增加了一些 [`PRO`](https://pro.sun-panel.top) 功能，所以项目暂时进入闭源状态。目前开源最新版本为`v1.3.0`，[闭源最新版本请查看](https://github.com/hslr-s/sun-panel/releases)。待开发出模块化技术，然后对PRO和主程序进行分离会再次开源，闭源对普通用户没有任何影响。我们一起期待再次开源吧，同时也欢迎各位大佬对程序的安全性进行监督和审查。
 
+## 🛠️ 本仓库改动说明
+
+本仓库基于开源版本 **v1.3.0** 二次开发：原版代码保留在 [master](https://github.com/aisubing/sun-panel/tree/master) 分支，全部改动在 [main](https://github.com/aisubing/sun-panel/tree/main) 分支（[提交对比](https://github.com/aisubing/sun-panel/compare/master...main)）。
+
+### 主要改动
+
+- **品牌定制**：网页标题改为「导航面板」，替换浏览器图标（favicon）
+- **关于页面**：移除原作者个人信息与「检查更新」入口；保留上游项目仓库链接作为开源署名
+- **上传规则**：上传文件统一保存至 `uploads/icons/` 平铺目录，去除原「年/月/日」层级；目录逻辑收敛为公共函数 `GetUploadSaveDir()`，历史路径完全兼容
+- **Docker 构建修复**：固定 `pnpm@8` 匹配 lockfile v6.0（修复 pnpm 10 默认禁止依赖构建脚本导致的 `esbuild` 报错）；统一 `AS` 大小写、`CMD` 改为 JSON 格式
+- **新增发布流水线**：[docker-release.yml](.github/workflows/docker-release.yml)——推送 `v*` 标签自动构建 amd64/arm64 双架构镜像包并发布到 [Releases](https://github.com/aisubing/sun-panel/releases)
+- **文档链接修复**：README 中已失效的旧文档域名更新为官方新地址
+- **版本号**：升级至 `1.3.2`（版本源文件 `service/assets/version`）
+
+### 发布流程
+
+1. 修改 `service/assets/version`（格式：`版本码|版本号`）并推送 `main`
+2. 执行 `git tag vX.Y.Z && git push origin vX.Y.Z`，GitHub Actions 自动完成构建与发布
+
 ## 😎 Features
 
 - 🍉 Clean interface, powerful functionality, low resource consumption
