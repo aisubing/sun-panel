@@ -10,16 +10,8 @@ permissions:
   contents: write
 
 jobs:
-  build:
+  build-and-release:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - platform: linux/amd64
-            arch: amd64
-          - platform: linux/arm64
-            arch: arm64
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -28,53 +20,38 @@ jobs:
         run: echo "APP_VERSION=$(cut -d '|' -f 2 ./service/assets/version)" >> $GITHUB_ENV
 
       - name: Set up QEMU
-        if: matrix.arch != 'amd64'
         uses: docker/setup-qemu-action@v3
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Build image archive
+      - name: Build image archive (amd64)
         uses: docker/build-push-action@v6
         with:
           context: .
-          platforms: ${{ matrix.platform }}
+          platforms: linux/amd64
           tags: sun-panel:${{ env.APP_VERSION }}
           provenance: false
-          outputs: type=docker,dest=sun-panel_${{ env.APP_VERSION }}_${{ matrix.arch }}.tar
+          outputs: type=docker,dest=sun-panel_${{ env.APP_VERSION }}_amd64.tar
 
-      - name: Compress archive
-        run: gzip -9 sun-panel_${{ env.APP_VERSION }}_${{ matrix.arch }}.tar
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
+      - name: Build image archive (arm64)
+        uses: docker/build-push-action@v6
         with:
-          name: image-${{ matrix.arch }}
-          path: sun-panel_${{ env.APP_VERSION }}_${{ matrix.arch }}.tar.gz
-          if-no-files-found: error
+          context: .
+          platforms: linux/arm64
+          tags: sun-panel:${{ env.APP_VERSION }}
+          provenance: false
+          outputs: type=docker,dest=sun-panel_${{ env.APP_VERSION }}_arm64.tar
 
-  release:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Read version from file
-        run: echo "APP_VERSION=$(cut -d '|' -f 2 ./service/assets/version)" >> $GITHUB_ENV
-
-      - name: Download image artifacts
-        uses: actions/download-artifact@v4
-        with:
-          path: release-assets
-          merge-multiple: true
+      - name: Compress archives
+        run: gzip -9 sun-panel_${{ env.APP_VERSION }}_amd64.tar sun-panel_${{ env.APP_VERSION }}_arm64.tar
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v${{ env.APP_VERSION }}
           name: Sun-Panel v${{ env.APP_VERSION }}
-          files: release-assets/*.tar.gz
+          files: sun-panel_${{ env.APP_VERSION }}_*.tar.gz
           generate_release_notes: true
           body: |
             ## 使用方法
