@@ -17,9 +17,8 @@
 [![github downloads](https://img.shields.io/github/downloads/hslr-s/sun-panel/total.svg?logo=github)](https://github.com/hslr-s/sun-panel/releases)
 [![docker pulls](https://img.shields.io/docker/pulls/hslr/sun-panel.svg?logo=docker)](https://hub.docker.com/r/hslr/sun-panel)
 
-[[ 中文文档 ]](https://sun-panel-doc.enianteam.com/zh_cn) |
-[[ Document ]](https://sun-panel-doc.enianteam.com) |
-[[ Demo ]](http://sunpaneldemo.enianteam.com) 
+[[ 中文文档 ]](https://doc.sun-panel.top/zh_cn/) |
+[[ Document ]](https://doc.sun-panel.top/) |
 
 A server, NAS navigation panel, Homepage, Browser homepage.
 <br>
@@ -66,7 +65,7 @@ A server, NAS navigation panel, Homepage, Browser homepage.
 
 
 ## 🐳 Deployment tutorial
-[Deployment Tutorial](https://sun-panel-doc.enianteam.com/usage/quick_deploy.html)
+[Deployment Tutorial](https://doc.sun-panel.top/zh_cn/usage/quick_deploy.html)
 
 ## 🍵 Donate
 
