@@ -14,7 +14,7 @@ export function defaultStatePanelConfig(): Panel.panelConfig {
     iconTextColor: '#ffffff',
     iconTextInfoHideDescription: false,
     iconTextIconHideTitle: false,
-    logoText: 'Sun-Panel',
+    logoText: '导航面板',
     logoImageSrc: '',
     clockShowSecond: false,
     searchBoxShow: false,
