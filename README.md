@@ -36,7 +36,7 @@ A server, NAS navigation panel, Homepage, Browser homepage.
 
 ## 🛠️ 本仓库改动说明
 
-本仓库基于开源版本 **v1.3.0** 二次开发：原版代码保留在 [master](https://github.com/aisubing/sun-panel/tree/master) 分支，全部改动在 [main](https://github.com/aisubing/sun-panel/tree/main) 分支（[提交对比](https://github.com/aisubing/sun-panel/compare/master...main)）。
+本仓库基于开源版本 **v1.3.0** 二次开发：原版代码保留在 [master](https://github.com/aisubing/sun-panel/tree/master) 分支，全部改动在 [main](https://github.com/aisubing/sun-panel/tree/main) 分支（[提交对比](https://github.com/aisubing/sun-panel/compare/master...main)）。本仓库功能止步于开源版本1.3.0，不包含闭源以后所有功能，仅作为纯粹导航。
 
 ### 主要改动
 
