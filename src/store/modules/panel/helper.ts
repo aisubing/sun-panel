@@ -3,7 +3,7 @@ import { PanelPanelConfigStyleEnum, PanelStateNetworkModeEnum } from '@/enums'
 import defaultBackground from '@/assets/defaultBackground.webp'
 const LOCAL_NAME = 'panelStorage'
 
-const defaultFooterHtml = '<div class="flex justify-center text-slate-300" style="margin-top:100px">Powered By <a href="https://github.com/hslr-s/sun-panel" target="_blank" class="ml-[5px]">Sun-Panel</a></div>'
+const defaultFooterHtml = '<div class="text-slate-300" style="position:fixed;right:20px;bottom:10px">Powered By <span class="ml-[5px]">Sun-Panel</span></div>'
 
 export function defaultStatePanelConfig(): Panel.panelConfig {
   return {
